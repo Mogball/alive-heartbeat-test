@@ -24,4 +24,6 @@ dependencies:
     version: 1.0.0
   mcp2515-driver:
     version: 1.0.0
+  wlib-fsm:
+    version: 1.0.0
 
