@@ -13,6 +13,9 @@ project:
 targets:
   main:
     src: src
+    platform: avr
+    framework: cosa
+    board: uno
 
 dependencies:
   can-packet:

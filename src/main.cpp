@@ -1,6 +1,7 @@
 #include <MCP2515.h>
 #include <Cosa/MCP2515.h>
 #include <Cosa/UART.hh>
+#include <stdio.h>
 
 #define uprintf(...) { \
     int __wrt = sprintf(s_buf, __VA_ARGS__); \
