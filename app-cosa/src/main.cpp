@@ -1,7 +1,13 @@
 #include <MCP2515.h>
+#include <CanPacket.h>
+#include <CanPacketDriver.h>
 #include <Cosa/MCP2515.h>
 #include <Cosa/UART.hh>
 #include <stdio.h>
+
+#ifndef NODE_ID
+#error "Must define NODE_ID"
+#endif
 
 #define uprintf(...) { \
     int __wrt = sprintf(s_buf, __VA_ARGS__); \
@@ -11,6 +17,7 @@ using namespace wlp;
 
 static cosa::MCP2515 s_canBase(Board::D10);
 static MCP2515 s_canBus(&s_canBase);
+static Packet s_packet(NODE_ID, (uint32_t) 0, 0u);
 static char s_buf[64];
 
 void setup() {
@@ -22,7 +29,13 @@ void setup() {
     uprintf("CAN Inited successfully\n");
 }
 
+enum {
+    IM_ALIVE = 0xffff00ff
+};
+
 void loop() {
     delay(500);
-    uprintf("_loop_\n");
+    s_packet.type() = 0;
+    s_packet.data() = IM_ALIVE;
+    packet::send(s_canBus, s_packet);
 }

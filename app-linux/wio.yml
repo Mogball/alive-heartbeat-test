@@ -1,7 +1,7 @@
 type: app
 
 project:
-  name: alive-heartbeat-test
+  name: app-linux
   version: 0.0.1
   keywords:
   - wio
@@ -13,17 +13,10 @@ project:
 targets:
   main:
     src: src
-    platform: avr
-    framework: cosa
-    board: uno
 
 dependencies:
-  can-packet:
-    version: 1.0.0
-  mcp2515-cosa:
-    version: 1.0.0
   mcp2515-driver:
     version: 1.0.0
-  wlib-fsm:
+  mcp2515-linux:
     version: 1.0.0
 

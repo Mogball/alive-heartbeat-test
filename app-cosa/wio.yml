@@ -1,0 +1,47 @@
+type: app
+
+project:
+  name: alive-heartbeat-test
+  version: 0.0.1
+  keywords:
+  - wio
+  - app
+  compile_options:
+    wio_version: 0.5.1
+
+targets:
+  main0:
+    src: src
+    platform: avr
+    framework: cosa
+    board: uno
+    definitions:
+      target:
+      - NODE_ID=10
+  main1:
+    src: src
+    platform: avr
+    framework: cosa
+    board: uno
+    definitions:
+      target:
+      - NODE_ID=11
+  main2:
+    src: src
+    platform: avr
+    framework: cosa
+    board: uno
+    definitions:
+      target:
+      - NODE_ID=12
+
+dependencies:
+  can-packet:
+    version: 1.0.0
+  mcp2515-cosa:
+    version: 1.0.0
+  mcp2515-driver:
+    version: 1.0.0
+  wlib-fsm:
+    version: 1.0.0
+
