@@ -1,4 +1,6 @@
 #include "state_machine.h"
+#include <climits>
+#include <cstdio>
 
 constexpr uint32_t s_allAttendance =
     (1 << 10) |
@@ -22,6 +24,7 @@ void MessageSM::takeAttendance(uint16_t id) {
     if (id < sizeof(uint32_t) * CHAR_BIT) {
         m_attendance |= (1 << id);
     }
+    printf("Attendance taken: %d\n", id);
     MessageData data;
     BEGIN_TRANSITION_MAP()
         TRANSITION_MAP_ENTRY(EVENT_IGNORED) // ST_POWERUP
@@ -38,10 +41,12 @@ STATE_DEFINE(MessageSM, StAttendance, MessageData) {
 }
 
 STATE_DEFINE(MessageSM, StIdle, MessageData) {
+    printf("Idle state\n");
 }
 
 STATE_DEFINE(MessageSM, StError, MessageData) {
 }
 
 GUARD_DEFINE(MessageSM, GdIdle, MessageData) {
+    return s_allAttendance == m_attendance;
 }

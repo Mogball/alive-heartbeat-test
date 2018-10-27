@@ -5,7 +5,7 @@
 #include <wlib/state_machine>
 #include <cstdint>
 
-class MessageData {};
+class MessageData : public wlp::sm_event_data {};
 
 class MessageSM : public wlp::state_machine {
 public:
@@ -36,7 +36,7 @@ private:
     BEGIN_STATE_MAP_EX()
         STATE_MAP_ENTRY_EX(&StPowerup)
         STATE_MAP_ENTRY_EX(&StAttendance)
-        STATE_MAP_ENRTY_ALL_EX(&StIdle, &GdIdle, nullptr, nullptr)
+        STATE_MAP_ENTRY_ALL_EX(&StIdle, &GdIdle, nullptr, nullptr)
         STATE_MAP_ENTRY_EX(&StError)
     END_STATE_MAP_EX()
 };

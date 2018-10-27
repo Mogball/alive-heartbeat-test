@@ -23,5 +23,5 @@ dependencies:
   mcp2515-linux:
     version: 1.0.0
   wlib-fsm:
-    version: 1.0.0
+    version: 1.0.1
 
