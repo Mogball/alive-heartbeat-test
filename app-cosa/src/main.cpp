@@ -30,12 +30,15 @@ void setup() {
 }
 
 enum {
-    IM_ALIVE = 0xffff00ff
+    IM_ALIVE = 0xffff00ff,
+
+    ATTENDANCE = 0x01,
+    HEARTBEAT  = 0x02
 };
 
 void loop() {
     delay(500);
-    s_packet.type() = 0;
+    s_packet.type() = ATTENDANCE;
     s_packet.data() = IM_ALIVE;
     packet::send(s_canBus, s_packet);
 }
