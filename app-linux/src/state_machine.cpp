@@ -24,7 +24,6 @@ void MessageSM::takeAttendance(uint16_t id) {
     if (id < sizeof(uint32_t) * CHAR_BIT) {
         m_attendance |= (1 << id);
     }
-    printf("Attendance taken: %d\n", id);
     MessageData data;
     BEGIN_TRANSITION_MAP()
         TRANSITION_MAP_ENTRY(EVENT_IGNORED) // ST_POWERUP
@@ -41,7 +40,6 @@ STATE_DEFINE(MessageSM, StAttendance, MessageData) {
 }
 
 STATE_DEFINE(MessageSM, StIdle, MessageData) {
-    printf("Idle state\n");
 }
 
 STATE_DEFINE(MessageSM, StError, MessageData) {

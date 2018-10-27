@@ -39,7 +39,7 @@ static void *can_func(void *) {
 }
 
 static void *poll_func(void *) {
-    s_queue.setHandler(4, &attendanceHandler);
+    s_queue.setHandler(1, &attendanceHandler);
     for (;;) {
         s_queue.handleNext();
     }
