@@ -8,7 +8,7 @@ constexpr uint32_t s_allAttendance =
     (1 << 12);
 
 MessageSM::MessageSM() :
-    wlp::state_machine(ST_MAX_STATES, ST_POWERUP) {}
+    wlp::state_machine(ST_MAX_STATES, ST_ATTENDANCE) {}
 
 void MessageSM::begin() {
     MessageData data;

@@ -41,4 +41,6 @@ private:
     END_STATE_MAP_EX()
 };
 
+extern void attendanceHandler(const wlp::Packet &msg);
+
 #endif

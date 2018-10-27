@@ -1,4 +1,5 @@
 #include "message_handler.h"
+#include "state_machine.h"
 #include <MCP2515.h>
 #include <CanPacket.h>
 #include <CanPacketDriver.h>
@@ -38,6 +39,7 @@ static void *can_func(void *) {
 }
 
 static void *poll_func(void *) {
+    s_queue.setHandler(4, &attendanceHandler);
     for (;;) {
         s_queue.handleNext();
     }
