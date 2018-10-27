@@ -37,7 +37,7 @@ targets:
 
 dependencies:
   can-packet:
-    version: 1.0.0
+    version: 1.0.1
   mcp2515-cosa:
     version: 1.0.0
   mcp2515-driver:

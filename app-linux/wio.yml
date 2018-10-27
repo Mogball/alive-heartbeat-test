@@ -13,8 +13,11 @@ project:
 targets:
   main:
     src: src
+    platform: native
 
 dependencies:
+  can-packet:
+    version: 1.0.1
   mcp2515-driver:
     version: 1.0.0
   mcp2515-linux:
