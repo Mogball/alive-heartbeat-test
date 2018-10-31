@@ -14,7 +14,7 @@ class MessageQueue {
 public:
     explicit MessageQueue(InitInfo initInfo);
 
-    void setHandler(uint32_t type,  MessageHandler handler);
+    void setHandler(uint32_t type, MessageHandler handler);
     void pushMessage(const wlp::Packet &msg);
     bool handleNext();
 

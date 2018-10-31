@@ -1,6 +1,11 @@
 #include "state_machine.h"
 
-static MessageSM s_sm;
+static MessageOut s_out;
+static MessageSM s_sm(&s_out);
+
+void tickHandler() {
+    s_sm.tick();
+}
 
 void powerupHandler(const wlp::Packet &msg) {
     if (msg.data() == 0xffff000f) {

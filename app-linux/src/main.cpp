@@ -1,4 +1,5 @@
 #include "message_handler.h"
+#include "message_out.h"
 #include "state_machine.h"
 #include <MCP2515.h>
 #include <CanPacket.h>
@@ -11,7 +12,8 @@
 
 using namespace wlp;
 
-static MessageQueue s_queue(InitInfo({10, 11, 12}));
+static MessageOut s_in;
+static MessageOut s_out;
 
 static bool ready(MCP2515 &bus) {
     return MessageState::MessagePending == bus.get_message_status();
@@ -32,16 +34,60 @@ static void *can_func(void *) {
     for (;;) {
         if (ready(canBus)) {
             packet::read(canBus, packet);
-            s_queue.pushMessage(packet);
+            s_in.pushMessage(packet);
+        }
+        if (s_out.hasNext()) {
+            packet = s_out.getNext();
+            packet::send(canBus, packet);
         }
     }
     return nullptr;
 }
 
-static void *poll_func(void *) {
-    s_queue.setHandler(1, &attendanceHandler);
+typedef void (*fhandler_t)(Packet &);
+
+static char s_msgBuf[256];
+static size_t s_state;
+static fhandler_t s_handlers[256];
+static uint32_t s_attendance;
+constexpr uint32_t s_expectedAttendance = (7 << 10);
+
+static void fatalError(const char *msg) {
     for (;;) {
-        s_queue.handleNext();
+        puts(msg);
+        sleep(500);
+    }
+}
+
+static void unhandled(Packet &p) {
+    printf("WARNING: Unhandled message type %d\n", (int) p.type());
+}
+
+static void takeAttendance(Packet &p) {
+    uint16_t id = p.id();
+    s_attendance |= (1 << id);
+    if (s_attendance | s_expectedAttendance != s_expectedAttendance) {
+        sprintf(s_msgBuf, "ERROR: Unexpected attendance ID: %d\n", (int) id);
+        fatalError(s_msgBuf);
+    }
+
+    if (s_attendance == s_expectedAttendance) {
+        printf("All nodes reporting\n");
+    }
+}
+
+static void *poll_func(void *) {
+    for (size_t i = 0; i < sizeof(s_handlers) / sizeof(s_handlers[0]); ++i) {
+        s_handlers[i] = &unhandled;
+    }
+    s_handlers[2] = &takeAttendance;
+
+    Packet packet;
+    for (;;) {
+        if (s_in.hasNext()) {
+            packet = s_in.getNext();
+            (*s_handlers[packet.type()])(packet);
+        }
     }
     return nullptr;
 }
