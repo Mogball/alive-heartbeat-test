@@ -24,4 +24,6 @@ dependencies:
     version: 1.0.0
   wlib-fsm:
     version: 1.0.1
+  wlib-timer:
+    version: 1.0.0
 

@@ -18,5 +18,6 @@ bool MessageOut::hasNext() {
 wlp::Packet MessageOut::getNext() {
     std::lock_guard<std::mutex> guard(m_mutex);
     auto ret = m_messages.front();
+    m_messages.pop();
     return ret;
 }
