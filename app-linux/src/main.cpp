@@ -74,7 +74,7 @@ static void nothing() {}
 static void ignored(Packet &p) {}
 
 static void unhandled(Packet &p) {
-    printf("WARNING: Unhandled message type %d\n", (int) p.type());
+    printf("WARNING: Unhandled message type %d, %d, %08x\n", (int) p.type(), (int) p.id(), p.data());
 }
 
 static void takeAttendance(Packet &p) {

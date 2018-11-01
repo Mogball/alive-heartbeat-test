@@ -44,4 +44,8 @@ dependencies:
     version: 1.0.0
   wlib-fsm:
     version: 1.0.0
+  wlib-queue:
+    version: 1.0.0
+  wlib-timer:
+    version: 1.0.0
 
